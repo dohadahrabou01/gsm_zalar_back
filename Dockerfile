@@ -4,7 +4,7 @@ FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /gsm_zalar
 
 # Copier les fichiers de l'application
-COPY ./gsm_zalar/ .
+COPY ./gsm_zalar_back/ .
 
 # Construire l'application
 RUN mvn clean package

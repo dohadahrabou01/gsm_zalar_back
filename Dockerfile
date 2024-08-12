@@ -3,7 +3,7 @@ FROM maven:3.8.3-openjdk-17 AS build
 
 # Définir le répertoire de travail
 WORKDIR /app
-COPY ./app/ . 
+COPY ./app/ .
 
 RUN mvn clean package
 # Copier le fichier JAR de l'application dans le conteneur

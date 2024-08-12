@@ -4,8 +4,9 @@ import com.gsm_zalar.DTO.AFNumeroDTO;
 import com.gsm_zalar.Models.*;
 import com.gsm_zalar.Repositories.*;
 import com.gsm_zalar.Services.AFNumeroService;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +16,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AFNumeroServiceImplementation implements AFNumeroService{
@@ -39,6 +43,9 @@ public class AFNumeroServiceImplementation implements AFNumeroService{
         Numero numero1 = numeroRepository.findByNumero(numero);
         if (numero1 == null) {
             throw new RuntimeException("Numéro non trouvé");
+        }
+        if (numero1.getForfait() == null) {
+            throw new RuntimeException("ce numero n'a pas de forfait");
         }
 
         // Vérifiez si le numéro est déjà affecté

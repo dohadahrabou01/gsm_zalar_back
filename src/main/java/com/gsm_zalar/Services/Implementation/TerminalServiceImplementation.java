@@ -174,7 +174,8 @@ public class TerminalServiceImplementation implements TerminalService {
         List<AFTerminal> afterminals=afTerminalRepository.findByBeneficiare(beneficiare);
         List<Terminal> terminals=new ArrayList<>();
         for(AFTerminal afTerminal:afterminals){
-            terminals.add(afTerminal.getTerminal());
+            if(afTerminal.getValidation()==Validation.VALIDEE){
+            terminals.add(afTerminal.getTerminal());}
         }
         List<TerminalDTO> terminalDTOList=new ArrayList<>();
         for(Terminal terminal :terminals){

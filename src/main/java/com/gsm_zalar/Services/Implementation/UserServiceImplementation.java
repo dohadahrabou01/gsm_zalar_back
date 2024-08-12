@@ -115,7 +115,7 @@ public class UserServiceImplementation implements UserService {
                         "Votre compte a ete cree avec succes.\n" +
                         "Role: " + userDTO.getRole() + "\n" +
                         "Email: " + userDTO.getEmail() + "\n" +
-                        "Mot De Passe : " + userDTO.getPassword() + "\n" +
+
                         "Cordialement \n"
                        );
         return savedUser;

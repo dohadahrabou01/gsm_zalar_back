@@ -5,8 +5,9 @@ import com.gsm_zalar.Models.*;
 import com.gsm_zalar.Repositories.*;
 import com.gsm_zalar.Services.AFTerminalService;
 import com.gsm_zalar.Util.EmailUtil;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +18,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AFTerminalServiceImplementation implements AFTerminalService {
@@ -70,6 +74,7 @@ public class AFTerminalServiceImplementation implements AFTerminalService {
 
 
                 if (yearsBetween <= terminal.getDureeMax() && user1.getRole()==Role.RSI) {
+                    if(Terminal.get().getByFournisseur()!=null){
                     Terminal.get().setAffectation(true);
                     terminalRepository.save(Terminal.get());
                     AFTerminal newTerminal1 = new AFTerminal();
@@ -85,11 +90,13 @@ public class AFTerminalServiceImplementation implements AFTerminalService {
                     notification.setAfTerminal(newTerminal1);
                     notificationRepository.save(notification);
                     return newTerminal1;
-                }
+                }}
 
             }
         }
+        if(Terminal.get().getByFournisseur()!=null){
         Terminal.get().setAffectation(true);
+
         terminalRepository.save(Terminal.get());
         AFTerminal newTerminal = new AFTerminal();
         newTerminal.setDureeMax(Duree_Max);
@@ -99,7 +106,7 @@ public class AFTerminalServiceImplementation implements AFTerminalService {
         newTerminal.setDate_affectation(currentDate.format(DateTimeFormatter.ISO_DATE));
         newTerminal.setAffectant(userRepository.findByEmail(affectantEmail));
         afTerminalRepository.save(newTerminal);
-        return newTerminal;
+        return newTerminal;} return null;
     }
     @Override
     public void Duree_MAX(int duree) {

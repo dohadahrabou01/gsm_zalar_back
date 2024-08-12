@@ -20,6 +20,7 @@ public class NotificationService {
     public List<NotificationDTO> getOngoingAssignments() {
         List<Notification> notifications= notificationRepository.findAll().stream()
                 .filter(notification -> Validation.ENCOURS.equals(notification.getAfTerminal().getValidation()))
+                .filter(notification -> !(notification.getAfTerminal().getDeleted()))
                 .collect(Collectors.toList());
 
         List<NotificationDTO> NotificationDTOs=new ArrayList<>();

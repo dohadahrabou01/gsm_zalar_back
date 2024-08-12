@@ -153,7 +153,9 @@ public List<Beneficiare> importFromExcel(MultipartFile file) {
                         : null);
 
                 String multiple = csvRecord.get("Multiple").trim();
-                beneficiaire.setMultiple(Objects.equals(multiple, "TRUE"));
+                boolean isMultiple = "OUI".equals(multiple); // Comparaison sensible à la casse
+
+                beneficiaire.setMultiple(isMultiple);
 
                 beneficiaires.add(beneficiaire);
             } else {

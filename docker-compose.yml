@@ -6,7 +6,7 @@ services:
     container_name: mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: gsm_zalar
+      MYSQL_DATABASE: gsm
     ports:
       - "3306:3306"
     volumes:
@@ -26,7 +26,7 @@ services:
       - mysql
 
   frontend:
-    image: gsm_front
+    image: gsm_zalar_front
     container_name: frontend-container
     ports:
       - "3000:3000"

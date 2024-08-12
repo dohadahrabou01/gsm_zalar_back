@@ -89,14 +89,16 @@ public class FillialeImplementationService implements FillilaleService {
     @Override
     public List<FillialeDTO> getRSIFilliales() {
         return fillialeRepository.findAll().stream()
-                .filter(filliale -> filliale.getResponsable() == null ) // Filter condition
+                .filter(filliale -> filliale.getResponsable() == null )
+                .filter(filliale -> !filliale.getIsDeleted()) // Filter condition
                 .map(filliale -> new FillialeDTO(filliale.getId(), filliale.getLibelle(), filliale.getLieu(), filliale.getImagePath()))
                 .collect(Collectors.toList());
     }
     @Override
     public List<FillialeDTO> getSIFilliales() {
         return fillialeRepository.findAll().stream()
-                .filter(filliale -> filliale.getGerant() == null ) // Filter condition
+                .filter(filliale -> filliale.getGerant() == null )
+                .filter(filliale -> !filliale.getIsDeleted()) // Filter condition
                 .map(filliale -> new FillialeDTO(filliale.getId(), filliale.getLibelle(), filliale.getLieu(),filliale.getImagePath()))
                 .collect(Collectors.toList());
     }

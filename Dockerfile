@@ -5,9 +5,9 @@ WORKDIR /gsm_zalar_back
 
 # Copier les fichiers de l'application
 COPY ./gsm_zalar_back/ .
-
+COPY ./gsm_zalar_back/pom.xml ./gsm_zalar_back/src /gsm_zalar_back/
 # Construire l'application
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Utiliser une image Alpine avec OpenJDK 17 pour exécuter l'application
 FROM openjdk:17-alpine

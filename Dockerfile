@@ -1,10 +1,10 @@
 FROM maven:3.8.3-openjdk-17 AS build
 
 # Définir le répertoire de travail
-WORKDIR /gsm_zalar_back
+WORKDIR /gsm_zalar
 
 # Copier les fichiers de l'application
-COPY ./gsm_zalar_back/ .
+COPY ./gsm_zalar/ .
 
 # Construire l'application
 RUN mvn clean package
@@ -13,7 +13,7 @@ RUN mvn clean package
 FROM openjdk:17-alpine
 
 # Définir le répertoire de travail
-WORKDIR /gsm_zalar_back
+WORKDIR /gsm_zalar
 
 # Copier le fichier JAR de l'application depuis l'étape de build
 COPY --from=build /app/target/*.jar /app/app.jar

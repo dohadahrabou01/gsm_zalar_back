@@ -1,11 +1,11 @@
 FROM maven:3.8.3-openjdk-17 AS build
 
 # Définir le répertoire de travail
-WORKDIR /gsm_zalar_back
+WORKDIR /gsm_zalar
 
 # Copier les fichiers de l'application
-COPY ./gsm_zalar_back/ .
-COPY ./gsm_zalar_back/pom.xml ./gsm_zalar_back/src /gsm_zalar_back/
+COPY ./gsm_zalar/ .
+COPY ./gsm_zalar/pom.xml ./gsm_zalar/src /gsm_zalar/
 # Construire l'application
 RUN mvn clean package -DskipTests
 
@@ -13,10 +13,10 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-alpine
 
 # Définir le répertoire de travail
-WORKDIR /gsm_zalar_back
+WORKDIR /gsm_zalar
 
 # Copier le fichier JAR de l'application depuis l'étape de build
-COPY --from=build /app/target/*.jar /app/app.jar
+COPY --from=build /gsm_zalar/target/*.jar /gsm_zalar/app.jar
 
 # Exposer le port 9000
 EXPOSE 9000

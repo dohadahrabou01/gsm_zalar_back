@@ -311,7 +311,7 @@ public class UserServiceImplementation implements UserService {
             pendingUserUpdateRepository.save(pendingUpdate);
 
             // Send email to admin for validation
-            String validationLink = "http://localhost:3000/validateUpdate/" + pendingUpdate.getId();
+            String validationLink = "https://gsm-zalar-front.vercel.app/validateUpdate/" + pendingUpdate.getId();
             String emailContent = "Bonjour Admin,\n\n" +
                     "Un utilisateur avec l'email " + userDTO.getEmail() + " a demandé une modification de son compte.\n" +
                     "Veuillez valider les modifications en cliquant sur le lien suivant dans les 24 heures:\n" +

@@ -1,25 +1,23 @@
-FROM maven:3.8.3-openjdk-17 AS build
+﻿# Étape 1 : Construire l'application avec Maven
+FROM maven:3.8.4-openjdk-17 AS build
+WORKDIR /app
 
-# Définir le répertoire de travail
-WORKDIR /gsm_zalar_back
+# Copier les fichiers Maven et le code source
+COPY pom.xml .
+COPY src ./src
 
-# Copier les fichiers de l'application
-COPY ./gsm_zalar_back/ .
-COPY ./gsm_zalar_back/pom.xml ./gsm_zalar_back/src /gsm_zalar_back/
-# Construire l'application
+# Compiler le projet
 RUN mvn clean package -DskipTests
 
-# Utiliser une image Alpine avec OpenJDK 17 pour exécuter l'application
-FROM openjdk:17-alpine
+# Étape 2 : Exécuter l'application avec une image JDK
+FROM openjdk:17-jdk-slim
+WORKDIR /app
 
-# Définir le répertoire de travail
-WORKDIR /gsm_zalar_back
+# Copier le jar généré dans l'image finale
+COPY --from=build /app/target/gsm_zalar-0.0.1-SNAPSHOT.jar /app/gsm_zalar.jar
 
-# Copier le fichier JAR de l'application depuis l'étape de build
-COPY --from=build /gsm_zalar_back/target/*.jar /gsm_zalar_back/app.jar
-
-# Exposer le port 9000
+# Exposer le port
 EXPOSE 9000
 
-# Définir le point d'entrée pour exécuter l'application
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+# Commande pour exécuter l'application
+ENTRYPOINT ["java", "-jar", "gsm_zalar.jar"]

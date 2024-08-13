@@ -38,7 +38,7 @@ public class PasswordResetService {
             tokenRepository.save(passwordResetToken);
 
             // Construire le lien de réinitialisation
-            String resetUrl = "http://localhost:3000/reset?token=" + token;;
+            String resetUrl = "https://gsm-zalar-front.vercel.app/reset?token=" + token;;
             String subject = "Réinitialisation de votre mot de passe";
             String body = "Veuillez cliquer sur le lien suivant pour réinitialiser votre mot de passe : " + resetUrl;
 

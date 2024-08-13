@@ -27,9 +27,10 @@ public class TerminalDTO {
     private String deletedBy;
     public TerminalDTO(Terminal terminal){
         this.marque=terminal.getMarque();
-        this.ram=terminal.getModel();
-        this.imei=terminal.getMarque();
-        this.rom=terminal.getMarque();
+        this.model=terminal.getModel();
+        this.ram=terminal.getRam();
+        this.imei=terminal.getImei();
+        this.rom=terminal.getRom();
         this.affectation=terminal.getAffectation();
         this.dateAcquisition=terminal.getDateAcquisition();
         this.fournisseur=terminal.getFournisseur().getLibelle();

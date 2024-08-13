@@ -61,7 +61,7 @@ public class TerminalServiceImplementation implements TerminalService {
         terminal.setRam(terminalDTO.getRam());
         terminal.setRom(terminalDTO.getRom());
         terminal.setImei(terminalDTO.getImei());
-        terminal.setDateAcquisition(terminalDTO.getDateAcquisition());
+        terminal.setDateAcquisition(String.valueOf(LocalDate.now()));
         terminal.setDureeGarantie(terminalDTO.getDureeGarantie());
         terminal.setGrade(Grade.valueOf(terminalDTO.getGrade()));
 

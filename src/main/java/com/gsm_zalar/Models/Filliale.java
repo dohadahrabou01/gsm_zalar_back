@@ -1,9 +1,8 @@
 package com.gsm_zalar.Models;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,6 +17,10 @@ public class Filliale {
     private String libelle; // Consider renaming
     private String lieu; // Consider renaming
 
+
+    @Lob
+    @Column(name = "imageData", columnDefinition="LONGBLOB")
+    private byte[] imageData;
     @ManyToOne
     @JoinColumn(name = "responsable_id")
     private User responsable;

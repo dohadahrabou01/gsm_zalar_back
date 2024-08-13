@@ -5,6 +5,9 @@ import com.gsm_zalar.Models.Filliale;
 import com.gsm_zalar.Services.FileStorageService;
 import com.gsm_zalar.Services.FillilaleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,7 +65,8 @@ public class FillialeControlleur{
         Filliale filiale = new Filliale();
         filiale.setLibelle(libelle);
         filiale.setLieu(lieu);
-        filiale.setImagePath(imagePath);
+        filiale.setImagePath(image.getOriginalFilename());
+        filiale.setImageData(image.getBytes());
 
         Filliale savedFiliale = fillialeService.createFilliale(filiale);
         return ResponseEntity.ok(savedFiliale);
@@ -93,8 +97,8 @@ public class FillialeControlleur{
         // Update image if provided
         if (image != null && !image.isEmpty()) {
             // Store new image and update path
-            String imagePath = fileStorageService.storeFile(image);
-            existingFilliale.setImagePath(imagePath);
+            existingFilliale.setImagePath(image.getOriginalFilename());
+            existingFilliale.setImageData(image.getBytes());
         }
 
         // Save updated Filliale
@@ -102,7 +106,19 @@ public class FillialeControlleur{
         return ResponseEntity.ok(updatedFilliale);
     }
 
+    @GetMapping("/images/{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable int id) {
+        Filliale filliale = fillialeService.getFillialeById(id);
+        if (filliale == null || filliale.getImageData() == null) {
+            return ResponseEntity.notFound().build();
+        }
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // Utilise le type de contenu approprié
+        headers.setContentDispositionFormData("attachment", filliale.getImagePath());
+
+        return new ResponseEntity<>(filliale.getImageData(), headers, HttpStatus.OK);
+    }
     // URL: DELETE /api/filliales/{id}
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFilliale(@PathVariable int id,@RequestParam String email) {

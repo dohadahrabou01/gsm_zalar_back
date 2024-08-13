@@ -55,12 +55,6 @@ public class FillialeControlleur{
             @RequestParam("lieu") String lieu,
             @RequestParam("image") MultipartFile image) throws IOException {
 
-        String imagePath = null;
-        try {
-            imagePath = fileStorageService.storeFile(image);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
         Filliale filiale = new Filliale();
         filiale.setLibelle(libelle);
